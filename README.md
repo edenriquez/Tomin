@@ -1,3 +1,5 @@
+![Tomin Banner](assets/screen1.png)
+
 ## Tomin
 
 Tomin is an AI-powered financial assistant that helps you analyze and understand your financial data to make smarter, data-driven decisions.
@@ -5,13 +7,13 @@ Tomin is an AI-powered financial assistant that helps you analyze and understand
 ### Key Features
 
 - **Bill & Receipt Upload**: Easily upload and process financial documents including:
-  - Bank statements
+  - ✅ Bank statements
   - Digital receipts
   - Physical receipts (via image upload)
   - Electronic invoices (CFDI for Mexican market)
 
 - **Financial Analysis & Insights**:
-  - Spending distribution by category
+  - ✅ Spending distribution by category
   - Automated transaction categorization
   - Top 5 expense tracking (weekly/monthly/quarterly)
   - Historical spending patterns
@@ -28,3 +30,4 @@ Tomin is an AI-powered financial assistant that helps you analyze and understand
   - Mexican peso (MXN) currency support
   - Local retailer and service provider database
   - Region-specific financial insights
+

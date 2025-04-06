@@ -1,0 +1,45 @@
+# General
+.DS_Store
+*.log
+
+# Dependencies
+node_modules/
+front/node_modules
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.pytest_cache/
+
+# Environment
+.env
+.env.local
+.env.development
+.env.production
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# Testing
+coverage/
+htmlcov/
+
+# Frontend specific
+.next/
+out/
+
+# Local development
+uploads/
+tmp/
+
+# Editor temp files
+*.swp
+*.swo
