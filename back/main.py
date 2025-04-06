@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pdf_utils import extract_text
 from llm_service import analyze_expenses
 import magic
+import datetime
 
 app = FastAPI()
 
@@ -25,6 +26,15 @@ def validate_pdf_format(mime):
 def validate_max_content_size(content):
     if len(content) > ONE_MB:
         raise HTTPException(413, "File size exceeds 1MB limit")
+
+
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "service": "pdf-processor",
+        "timestamp": datetime.datetime.utcnow().isoformat(),
+    }
 
 
 @app.post("/process")
