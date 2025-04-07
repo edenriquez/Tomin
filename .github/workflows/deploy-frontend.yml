@@ -42,6 +42,5 @@ jobs:
       working-directory: front
       run: |
         npm install -g @aws-amplify/cli
-        amplify init --yes --envName dev
         amplify configure project
         amplify publish
