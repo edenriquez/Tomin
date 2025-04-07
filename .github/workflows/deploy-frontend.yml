@@ -1,4 +1,4 @@
-name: Deploy Frontend to Vercel
+name: Deploy Frontend to Amplify
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'front/**'
+  workflow_dispatch: {}
 env:
   AWS_REGION: us-east-1
 
