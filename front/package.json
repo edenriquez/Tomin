@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "^1.5.8",
+    "aws-amplify": "^6.14.1",
     "axios": "^1.8.4",
     "i18next": "^24.2.3",
     "install": "^0.13.0",
