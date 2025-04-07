@@ -32,14 +32,14 @@ resource "aws_security_group" "backend" {
     from_port   = 8000
     to_port     = 8000
     protocol    = "tcp"
-    security_groups = [aws_security_group.alb.id]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    security_groups = [aws_security_group.alb.id]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -74,27 +74,50 @@ variable "aws_account_id" {
   type        = string
 }
 
-variable "vpc_id" {
-  description = "VPC ID for ALB deployment"
-  type        = string
+data "aws_vpc" "default" {
+  default = true
 }
 
-variable "public_subnets" {
-  description = "Public subnets for ALB placement"
-  type        = list(string)
+data "aws_internet_gateway" "default" {
+  filter {
+    name   = "attachment.vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
-variable "route53_zone_id" {
-  description = "Route53 Hosted Zone ID"
-  type        = string
+data "aws_route_tables" "public" {
+  vpc_id = data.aws_vpc.default.id
+
+  filter {
+    name   = "route.destination-cidr-block"
+    values = ["0.0.0.0/0"]
+  }
+  filter {
+    name   = "route.gateway-id"
+    values = [data.aws_internet_gateway.default.id]
+  }
 }
+
+data "aws_subnets" "public" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+
+  # Filter subnets by explicit tag marking them as public
+  filter {
+    name   = "tag:Name"
+    values = ["public"]
+  }
+}
+
 
 output "alb_dns_name" {
   value = aws_lb.backend.dns_name
 }
 
 output "service_url" {
-  value = "https://${aws_route53_record.backend.fqdn}"
+  value = "http://${aws_lb.backend.dns_name}"
 }
 
 resource "aws_lb" "backend" {
@@ -102,7 +125,7 @@ resource "aws_lb" "backend" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
-  subnets            = var.public_subnets
+  subnets            = data.aws_subnets.public.ids
 }
 
 resource "aws_security_group" "alb" {
@@ -113,21 +136,14 @@ resource "aws_security_group" "alb" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    security_groups = [aws_security_group.alb.id]
-  }
-
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    security_groups = [aws_security_group.alb.id]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    security_groups = [aws_security_group.alb.id]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -136,7 +152,7 @@ resource "aws_lb_target_group" "backend" {
   port        = 8000
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = var.vpc_id
+  vpc_id      = data.aws_vpc.default.id
 
   health_check {
     path                = "/ping"
@@ -155,28 +171,13 @@ resource "aws_lb_listener" "http" {
   protocol          = "HTTP"
 
   default_action {
-    type = "redirect"
-
-    redirect {
-      port        = 443
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-}
-
-resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.backend.arn
-  port              = 443
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate_validation.main.certificate_arn
-
-  default_action {
     type             = "forward"
+
     target_group_arn = aws_lb_target_group.backend.arn
   }
 }
+
+
 
 resource "aws_ecs_service" "backend" {
   name            = "tomin-backend-service"
@@ -186,7 +187,7 @@ resource "aws_ecs_service" "backend" {
   desired_count   = 1
 
   network_configuration {
-    subnets         = var.public_subnets
+    subnets         = data.aws_subnets.public.ids
     security_groups = [aws_security_group.backend.id]
     assign_public_ip = true
   }
@@ -218,25 +219,4 @@ resource "aws_ecs_task_definition" "backend" {
       protocol      = "tcp"
     }]
   }])
-}
-
-resource "aws_route53_record" "backend" {
-  zone_id = var.route53_zone_id
-  name    = "api.tomin"
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.backend.dns_name
-    zone_id                = aws_lb.backend.zone_id
-    evaluate_target_health = true
-  }
-}
-
-resource "aws_acm_certificate" "main" {
-  domain_name       = "api.tomin"
-  validation_method = "DNS"
-}
-
-resource "aws_acm_certificate_validation" "main" {
-  certificate_arn = aws_acm_certificate.main.arn
 }

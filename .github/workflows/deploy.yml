@@ -39,15 +39,3 @@ jobs:
         docker build -f infra/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
-
-    - name: Terraform Init
-      working-directory: infra
-      run: terraform init
-
-    - name: Terraform Apply
-      working-directory: infra
-      run: terraform apply -auto-approve
-      env:
-        AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
