@@ -10,6 +10,11 @@
       "StackName": "amplify-tomin-dev-e71f9",
       "StackId": "arn:aws:cloudformation:us-east-1:233988307731:stack/amplify-tomin-dev-e71f9/da6244b0-1350-11f0-a155-0e54817f7013",
       "AmplifyAppId": "d2iuha8gp29uxn"
+    },
+    "categories": {
+      "hosting": {
+        "S3AndCloudFront": {}
+      }
     }
   }
 }
