@@ -2,7 +2,7 @@
 import { Accept, useDropzone } from 'react-dropzone';
 import Header from '@/components/header'
 import UploadIcon from '@/components/uploadIcon';
-import { uploadPdf, ApiProcessResponse } from '@/lib/api';
+import { uploadPdf, ApiProcessResponse, ping } from '@/lib/api';
 import toast, {Toaster  } from 'react-hot-toast';
 import { useState } from 'react';
 import AnalysisResult from '@/components/analysis'
@@ -14,6 +14,15 @@ export default function Home() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<ApiProcessResponse>();
+
+  const handleHealthCheck = async () => {
+    try {
+      const healthStatus = await ping();
+      toast.success(`Status: ${healthStatus.status}`);
+    } catch {
+      toast.error('Error in health check');
+    }
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: accept,
@@ -47,6 +56,12 @@ export default function Home() {
       />
       <div className="w-full space-y-8">
         <Header className="text-center space-y-2" />
+          <button
+            onClick={handleHealthCheck}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mx-auto block"
+          >
+            Verificar Estado del Servicio
+          </button>
         <div className="transition-all duration-300 ease-in-out">
           {analysisResult ? (
             <AnalysisResult data={analysisResult} />

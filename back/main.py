@@ -33,9 +33,17 @@ def validate_max_content_size(content):
 @app.get("/health")
 async def health_check():
     return {
-        "status": "healthy",
-        "service": "pdf-processor",
-        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+        },
+        "body": {
+            "status": "healthy",
+            "service": "pdf-processor",
+            "timestamp": datetime.datetime.utcnow().isoformat(),
+        },
     }
 
 
@@ -58,9 +66,17 @@ async def process_pdf(file: UploadFile = File(..., format=[".pdf"], alias="file"
     print(analysis)
 
     return {
-        "filename": file.filename,
-        "size": len(content),
-        "analysis": analysis,
+        "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Headers": "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+        },
+        "body": {
+            "filename": file.filename,
+            "size": len(content),
+            "analysis": analysis,
+        },
     }
 
 
