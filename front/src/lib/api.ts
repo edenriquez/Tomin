@@ -20,6 +20,7 @@ export const uploadPdf = async (file: File, onProgress?: (progress: number) => v
         headers: {
           'Content-Type': 'multipart/form-data',
         },
+        timeout: 60000,
         onUploadProgress: (progressEvent) => {
           const percentCompleted = progressEvent.progress || 0;
           onProgress?.(percentCompleted);
