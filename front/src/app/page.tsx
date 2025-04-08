@@ -60,7 +60,7 @@ export default function Home() {
             onClick={handleHealthCheck}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors mx-auto block"
           >
-            Verificar Estado del Servicio
+            Verify service health
           </button>
         <div className="transition-all duration-300 ease-in-out">
           {analysisResult ? (
