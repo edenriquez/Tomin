@@ -42,4 +42,4 @@ jobs:
         working-directory: front
         run: |
           aws s3 sync out/ s3://${{ env.AWS_S3_BUCKET_NAME }} --delete \
-            --cache-control "max-age=31536000,public"
+          --cache-control "max-age=31536000,public"

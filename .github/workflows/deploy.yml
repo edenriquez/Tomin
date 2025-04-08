@@ -37,13 +37,13 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
-        docker build -f infra/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        docker build -f back/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
     - name: Deploy to AWS Lambda
       run: |
         IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest"
-        aws lambda update-function-code \
+        aws lambda update-function-code --no-cli-pager \
           --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
           --image-uri "$IMAGE_URI" \
-          --region $AWS_REGION
+          --region $AWS_REGION  > /dev/null
