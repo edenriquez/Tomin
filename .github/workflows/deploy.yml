@@ -9,11 +9,10 @@ on:
       - 'infra/**'
   workflow_dispatch: {}
 
-
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: tomin-backend
-  CLUSTER_NAME: tomin-backend-cluster
+  LAMBDA_FUNCTION_NAME: tomin-backend
 
 jobs:
   deploy:
@@ -41,3 +40,10 @@ jobs:
         docker build -f infra/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
+    - name: Deploy to AWS Lambda
+      run: |
+        IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:latest"
+        aws lambda update-function-code \
+          --function-name ${{ ENV.LAMBDA_FUNCTION_NAME }} \
+          --image-uri "$IMAGE_URI" \
+          --region $AWS_REGION

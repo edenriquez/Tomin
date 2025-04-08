@@ -1,14 +1,14 @@
-FROM python:3.9-slim
+FROM public.ecr.aws/lambda/python:3.9
 
-WORKDIR /app
+# Install system dependencies required for python-magic
+RUN yum install -y libmagic && yum clean all
 
+# Install Python dependencies
 COPY back/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt --target /var/task
 
-COPY back/main.py .
-COPY back/pdf_utils.py .
-COPY back/llm_service.py .
+# Copy application code
+COPY . /var/task/
 
-EXPOSE 8000
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Set the CMD to your handler function
+CMD ["main.handler"]

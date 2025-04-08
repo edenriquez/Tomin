@@ -1,3 +1,5 @@
+from mangum import Mangum
+
 from fastapi import FastAPI, UploadFile, HTTPException, File
 from fastapi.middleware.cors import CORSMiddleware
 from pdf_utils import extract_text
@@ -62,7 +64,4 @@ async def process_pdf(file: UploadFile = File(..., format=[".pdf"], alias="file"
     }
 
 
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+handler = Mangum(app)
