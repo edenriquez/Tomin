@@ -17,7 +17,7 @@ COPY back/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 4. Copy application code
-COPY . .
+COPY back/* .
 
 # 5. Lambda entrypoint
 CMD ["main.handler"]
