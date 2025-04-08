@@ -2,24 +2,35 @@ import axios from 'axios';
 
 
 export type ApiProcessResponse = {
-  filename: string;
-  size: number;
-  analysis: unknown;
+  body: {
+    filename: string;
+    size: number;
+    analysis: unknown;
+  }
 };
 
 export type ApiHealthResponse = {
-  status: string;
-  service: string;
-  timestamp: string;
+  body: {
+    status: string;
+    service: string;
+    timestamp: string;
+  }
 };
 
 const BASE_URL = `https://i7hl4me64iadbkql4tjcpt5m6q0vgwos.lambda-url.us-east-1.on.aws`
+// const BASE_URL = `h;ttp://localhost:8000`
 
 export const ping = async (): Promise<ApiHealthResponse> => {
   try{
     const response = await axios.get<ApiHealthResponse>(
       `${BASE_URL}/health`,
-      { timeout: 60000 }
+      { timeout: 60000,
+        headers:{
+          "Access-Control-Request-Method": "GET",
+          "Access-Control-Request-Headers":" uthorization",
+          "Origin": "https://localhost:8080"
+        }
+       }
     )
     return response.data
   }catch (error) {
@@ -48,8 +59,8 @@ export const uploadPdf = async (file: File, onProgress?: (progress: number) => v
         },
       }
     );
-    
-    return response.data;
+  
+    return response.data
   } catch (error) {
     console.error('Upload failed:', error);
     throw new Error('Failed to upload PDF');

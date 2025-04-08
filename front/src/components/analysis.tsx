@@ -17,7 +17,7 @@ interface FinancialAnalysis {
 
 
 export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
-  const { category_distribution_sum, transactions } = data.analysis as FinancialAnalysis;
+  const { category_distribution_sum, transactions } = data.body.analysis as FinancialAnalysis;
 
   // Process data for charts
   const processChartData = () => {
@@ -160,7 +160,7 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
 
     {/* Transactions by Category */}
       <div className="space-y-6">
-        {Object.entries((data.analysis as FinancialAnalysis).transactions_by_category).map(([category, transactions]) => (
+        {Object.entries((data.body.analysis as FinancialAnalysis).transactions_by_category).map(([category, transactions]) => (
           <div key={category} className="bg-gray-800 rounded-lg p-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold capitalize">

@@ -18,7 +18,7 @@ export default function Home() {
   const handleHealthCheck = async () => {
     try {
       const healthStatus = await ping();
-      toast.success(`Status: ${healthStatus.status}`);
+      toast.success(`Status: ${healthStatus.body.status}`);
     } catch {
       toast.error('Error in health check');
     }
