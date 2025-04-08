@@ -14,7 +14,7 @@ export const uploadPdf = async (file: File, onProgress?: (progress: number) => v
 
   try {
     const response = await axios.post<ApiProcessResponse>(
-      `${process.env.NEXT_PUBLIC_API_URL}/process`,
+      `https://i7hl4me64iadbkql4tjcpt5m6q0vgwos.lambda-url.us-east-1.on.aws/process`,
       formData,
       {
         headers: {

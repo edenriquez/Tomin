@@ -3,7 +3,7 @@ export default function Header({ className }: { className?: string }) {
   return (
     <div className={className}>
       <Image className="mx-auto"
-        src="/logo.png" 
+        src="https://tomin-ai.s3.us-east-1.amazonaws.com/logo.png" 
         alt="Tomin logo"
         width={300}
         height={300}
