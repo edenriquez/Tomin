@@ -1,141 +1,224 @@
 {
-    "filename": "Estado de cuenta.pdf",
-    "size": 198432,
-    "analysis": {
-        "category_distribution_sum": {
-            "payments": -18750.45,
-            "shopping": 3245.67,
-            "services": 892.30,
-            "entertainment": 450.25,
-            "fuel": 325.80,
-            "groceries": 1567.90,
-            "telecommunications": 245.60,
-            "subscriptions": 189.99,
-            "restaurants": 678.45,
-            "other": 12456.78
-        },
-        "transactions": [
-            {
-                "date": "12-feb-2025",
-                "description": "WALMART SUPERCENTER NWM 9709244W4",
-                "amount": 856.34
-            },
-            {
-                "date": "13-feb-2025",
-                "description": "NETFLIX STREAMING NME 110513PI3MX",
-                "amount": 189.99
-            },
-            {
-                "date": "14-feb-2025",
-                "description": "SU ABONO...GRACIAS",
-                "amount": -5430.25
-            },
-            {
-                "date": "16-feb-2025",
-                "description": "CINEPOLIS PLAZA CPS 980114PI2MX",
-                "amount": 450.25
-            },
-            {
-                "date": "18-feb-2025",
-                "description": "OXXO INSURGENTES CCO 8605231N4",
-                "amount": 145.50
-            },
-            {
-                "date": "20-feb-2025",
-                "description": "TELCEL RECARGA SHT 170828PR1MX",
-                "amount": 245.60
-            },
-            {
-                "date": "22-feb-2025",
-                "description": "SU ABONO...GRACIAS",
-                "amount": -7890.20
-            },
-            {
-                "date": "24-feb-2025",
-                "description": "SORIANA SUP SOR 840110786",
-                "amount": 1567.90
-            },
-            {
-                "date": "26-feb-2025",
-                "description": "PEMEX EST 0534 PEM 910716ND6",
-                "amount": 325.80
-            },
-            {
-                "date": "28-feb-2025",
-                "description": "SU ABONO...GRACIAS",
-                "amount": -5430.00
-            }
-        ],
-        "transactions_by_category": {
-            "payments": [
+    "statusCode": 200,
+    "headers": {
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+    },
+    "body": {
+        "filename": "Estado de cuenta.pdf",
+        "size": 206877,
+        "analysis": {
+            "transactions": [
+                {
+                    "date": "14-feb-2025",
+                    "description": "HTECH COM TELCEL SAL SHT 170828PR1MX",
+                    "amount": 15.0,
+                    "category": "phone"
+                },
+                {
+                    "date": "14-feb-2025",
+                    "description": "OXXO TLALMANNALCO CCO 8605231N4",
+                    "amount": 78.0,
+                    "category": "supermarket"
+                },
                 {
                     "date": "14-feb-2025",
                     "description": "SU ABONO...GRACIAS",
-                    "amount": -5430.25
+                    "amount": -12825.89,
+                    "category": "payments"
+                },
+                {
+                    "date": "15-feb-2025",
+                    "description": "SERVICIO OGROVE SOG 230922EG0MX",
+                    "amount": 1138.7,
+                    "category": "other"
+                },
+                {
+                    "date": "15-feb-2025",
+                    "description": "OUTLET IXTAPALUCA DMA850716ER5MX",
+                    "amount": 498.0,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "15-feb-2025",
+                    "description": "MAMBATA IXTAPALUCA CRS1506068B8MX",
+                    "amount": 219.0,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "16-feb-2025",
+                    "description": "MERCADO PAGO MAG 2105031W3",
+                    "amount": 356.49,
+                    "category": "online_purchase"
+                },
+                {
+                    "date": "16-feb-2025",
+                    "description": "REST DELARTE CHAPULTEP TEMM800625A6A",
+                    "amount": 489.5,
+                    "category": "restaurants"
+                },
+                {
+                    "date": "16-feb-2025",
+                    "description": "OXXO TLALMANNALCO CCO 8605231N4",
+                    "amount": 224.5,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "16-feb-2025",
+                    "description": "MI BGA AURRERA TLALMAN NWM 9709244W4",
+                    "amount": 1049.01,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "20-feb-2025",
+                    "description": "ATT SITIO AEM TA CNM 980114PI2MX",
+                    "amount": 30.0,
+                    "category": "telecommunications"
+                },
+                {
+                    "date": "21-feb-2025",
+                    "description": "SU ABONO...GRACIAS",
+                    "amount": -255.0,
+                    "category": "payments"
+                },
+                {
+                    "date": "22-feb-2025",
+                    "description": "FNZ*TIENDAS 3B TTB 040915CY9MX",
+                    "amount": 60.0,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "22-feb-2025",
+                    "description": "OA AMECAMECA EOP 840110786",
+                    "amount": 2725.0,
+                    "category": "other"
                 },
                 {
                     "date": "22-feb-2025",
                     "description": "SU ABONO...GRACIAS",
-                    "amount": -7890.20
+                    "amount": -3000.0,
+                    "category": "payments"
                 },
                 {
-                    "date": "28-feb-2025",
+                    "date": "23-feb-2025",
+                    "description": "HTECH COM TELCEL SAL SHT 170828PR1MX",
+                    "amount": 15.0,
+                    "category": "phone"
+                },
+                {
+                    "date": "23-feb-2025",
+                    "description": "GASOL SERV AIMAYA SAI 200204QT3MX",
+                    "amount": 700.94,
+                    "category": "fuel"
+                },
+                {
+                    "date": "23-feb-2025",
+                    "description": "OXXO TLALMANNALCO CCO 8605231N4",
+                    "amount": 161.0,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "23-feb-2025",
+                    "description": "SUPERCENTER VICENTE GU NWM 9709244W4",
+                    "amount": 2109.48,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "24-feb-2025",
+                    "description": "MERPAGO*GYMFUERZAFIT2 MAG 2105031W3",
+                    "amount": 350.0,
+                    "category": "subscriptions"
+                },
+                {
+                    "date": "25-feb-2025",
+                    "description": "PAYPAL*GOOGLE YOUTUBE OPM 150323DI1MX",
+                    "amount": 60.0,
+                    "category": "subscriptions"
+                },
+                {
+                    "date": "25-feb-2025",
+                    "description": "NETFLIX NME 110513PI3MX",
+                    "amount": 249.0,
+                    "category": "subscriptions"
+                },
+                {
+                    "date": "27-feb-2025",
+                    "description": "MERPAGO*GYMFUERZAFIT2 MAG 2105031W3",
+                    "amount": 350.0,
+                    "category": "subscriptions"
+                },
+                {
+                    "date": "27-feb-2025",
                     "description": "SU ABONO...GRACIAS",
-                    "amount": -5430.00
-                }
-            ],
-            "shopping": [
-                {
-                    "date": "12-feb-2025",
-                    "description": "WALMART SUPERCENTER NWM 9709244W4",
-                    "amount": 856.34
+                    "amount": -7000.0,
+                    "category": "payments"
                 },
                 {
-                    "date": "24-feb-2025",
-                    "description": "SORIANA SUP SOR 840110786",
-                    "amount": 1567.90
-                }
-            ],
-            "entertainment": [
+                    "date": "01-mar-2025",
+                    "description": "FNZ*TIENDAS 3B TTB 040915CY9MX",
+                    "amount": 107.0,
+                    "category": "supermarket"
+                },
                 {
-                    "date": "16-feb-2025",
-                    "description": "CINEPOLIS PLAZA CPS 980114PI2MX",
-                    "amount": 450.25
-                }
-            ],
-            "telecommunications": [
+                    "date": "02-mar-2025",
+                    "description": "HTECH COM TELCEL SAL SHT 170828PR1MX",
+                    "amount": 10.0,
+                    "category": "phone"
+                },
                 {
-                    "date": "20-feb-2025",
-                    "description": "TELCEL RECARGA SHT 170828PR1MX",
-                    "amount": 245.60
-                }
-            ],
-            "subscriptions": [
+                    "date": "04-mar-2025",
+                    "description": "PAYPAL*CABLEYCOMUN OPM 150323DI1MX",
+                    "amount": 610.0,
+                    "category": "subscriptions"
+                },
                 {
-                    "date": "13-feb-2025",
-                    "description": "NETFLIX STREAMING NME 110513PI3MX",
-                    "amount": 189.99
-                }
-            ],
-            "fuel": [
+                    "date": "05-mar-2025",
+                    "description": "HTECH COM TELCEL SAL SHT 170828PR1MX",
+                    "amount": 10.0,
+                    "category": "phone"
+                },
                 {
-                    "date": "26-feb-2025",
-                    "description": "PEMEX EST 0534 PEM 910716ND6",
-                    "amount": 325.80
-                }
-            ],
-            "groceries": [
+                    "date": "05-mar-2025",
+                    "description": "MI BGA AURRERA TLALMAN NWM 9709244W4",
+                    "amount": 92.5,
+                    "category": "supermarket"
+                },
                 {
-                    "date": "24-feb-2025",
-                    "description": "SORIANA SUP SOR 840110786",
-                    "amount": 1567.90
-                }
-            ],
-            "other": [
+                    "date": "06-mar-2025",
+                    "description": "OXXO TLALMANNALCO CCO 8605231N4",
+                    "amount": 140.0,
+                    "category": "supermarket"
+                },
                 {
-                    "date": "18-feb-2025",
-                    "description": "OXXO INSURGENTES CCO 8605231N4",
-                    "amount": 145.50
+                    "date": "06-mar-2025",
+                    "description": "SU ABONO...GRACIAS",
+                    "amount": -831.0,
+                    "category": "payments"
+                },
+                {
+                    "date": "07-mar-2025",
+                    "description": "HTECH COM TELCEL SAL SHT 170828PR1MX",
+                    "amount": 15.0,
+                    "category": "phone"
+                },
+                {
+                    "date": "08-mar-2025",
+                    "description": "REST DELARTE TLALMANAL TEMM800625A6A",
+                    "amount": 605.0,
+                    "category": "restaurants"
+                },
+                {
+                    "date": "08-mar-2025",
+                    "description": "SUPERCENTER VICENTE GU NWM 9709244W4",
+                    "amount": 3574.5,
+                    "category": "supermarket"
+                },
+                {
+                    "date": "08-mar-2025",
+                    "description": "SERVICIO AIMAYA 2 SAI 200204QT3",
+                    "amount": 700.0,
+                    "category": "other"
                 }
             ]
         }

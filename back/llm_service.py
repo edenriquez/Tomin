@@ -16,51 +16,31 @@ EXPENSE_PROMPT_TEMPLATE = """
 Analyze the following bank statement and return a structured JSON object with these requirements:
 
 ## CATEGORIES TO USE
-- Income: "Salary", "Freelance", "Investments"
+- Income: "Salary", "Freelance", "Investments", "Paycheck"
 - Expenses: 
-  "Payments/Credits", 
-  "Shopping", 
-  "Services", 
-  "Entertainment", 
-  "Fuel", 
-  "Groceries", 
-  "Telecommunications", 
-  "Subscriptions", 
-  "Restaurants", 
-  "Other"
+  "payments", 
+  "supermarket", 
+  "phone", 
+  "fuel", 
+  "subscriptions", 
+  "online_purchase", 
+  "telecommunications", 
+  "restaurants", 
+  "cash_withdrawals", 
+  "anomalies", 
+  "other"
 
 ## OUTPUT STRUCTURE
 
-  "category_distribution_sum": 
-    "payments": float,
-    "shopping": float,
-    "services": float,
-    "entertainment": float,
-    "fuel": float,
-    "groceries": float,
-    "telecommunications": float,
-    "subscriptions": float,
-    "restaurants": float,
-    "other": float
-  ,
   "transactions": [
     
       "date": "YYYY-MM-DD", 
       "description": "Transaction text",
-      "amount": float
+      "amount": float,
+      "category": string
     ,
     ...
   ],
-  "transactions_by_category": 
-    "category_name": [
-      
-        "date": "YYYY-MM-DD",
-        "description": "Transaction text",
-        "amount": float
-      ,
-      ...
-    ],
-    ...
 
 ### Statement Data:
 {text}
@@ -70,13 +50,17 @@ Analyze the following bank statement and return a structured JSON object with th
 2. Maintain negative amounts for credits/payments
 3. Amounts must be floats (not strings)
 4. Categorize transactions using these guidelines:
-   - "Payments/Credits": Any refunds or payments made to the account
-   - "Shopping": Retail purchases, online/offline stores
-   - "Services": Bills, utilities, professional services
-   - "Fuel": Gas station transactions
-   - "Groceries": Supermarkets, food stores
-   - "Telecommunications": Phone, internet, tech services
-   - "Subscriptions": Recurring payments
+   - "payments": Any refunds or payments made to the account
+   - "supermarket": Retail purchases, online/offline stores
+   - "phone": Phone Bills
+   - "fuel": Gas station transactions
+   - "subscriptions": Recurring payments
+   - "telecommunications": internet, tech services
+   - "restaurants": dinning, lifestyle
+   - "online_purchase": mercado libre, amazon, etc
+   - "cash_withdrawals": efectivo
+   - "anomalies": efectivo
+   - "other": other concepts
 5. Include ALL transactions from the statement
 6. Use "Other" for unclassifiable transactions
 7. Transaction description should be the exact same that is in the document ( no translation )

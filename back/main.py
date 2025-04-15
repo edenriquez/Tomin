@@ -3,9 +3,8 @@ from mangum import Mangum
 from fastapi import FastAPI, UploadFile, HTTPException, File
 from fastapi.middleware.cors import CORSMiddleware
 from pdf_utils import extract_text
-from llm_service import analyze_expenses
-import magic
 import datetime
+import magic
 
 app = FastAPI()
 
@@ -59,11 +58,9 @@ async def process_pdf(file: UploadFile = File(..., format=[".pdf"], alias="file"
 
     try:
         text = extract_text(content)
-        analysis = await analyze_expenses(text)
+        # analysis = await analyze_expenses(text)
     except Exception as e:
         raise HTTPException(500, f"Processing error: {str(e)}")
-
-    print(analysis)
 
     return {
         "statusCode": 200,
@@ -75,7 +72,7 @@ async def process_pdf(file: UploadFile = File(..., format=[".pdf"], alias="file"
         "body": {
             "filename": file.filename,
             "size": len(content),
-            "analysis": analysis,
+            "analysis": text,
         },
     }
 

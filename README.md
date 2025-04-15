@@ -14,6 +14,8 @@ Tomin is an AI-powered financial assistant that helps you analyze and understand
 
 - **Financial Analysis & Insights**:
   - ✅ Spending distribution by category
+  - For subscription create recurring monthly budget.
+  - How many times i do cash retirements
   - Automated transaction categorization
   - Top 5 expense tracking (weekly/monthly/quarterly)
   - Historical spending patterns
