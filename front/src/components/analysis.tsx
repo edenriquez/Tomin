@@ -126,14 +126,20 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
         month: 'short',
         day: 'numeric',
       });
-      acc[date] = (acc[date] || 0) + Math.abs(transaction.amount);
+      const category = transaction.category;
+      if (!acc[date]) acc[date] = { total: 0, categories: {} };
+      acc[date].total += Math.abs(transaction.amount);
+      acc[date].categories[category] = (acc[date].categories[category] || 0) + Math.abs(transaction.amount);
       return acc;
-    }, {} as Record<string, number>);
+    }, {} as Record<string, { total: number; categories: Record<string, number> }>);
   };
 
-  const chartData = Object.entries(getChartData()).map(([date, amount]) => ({
+  const rawChartData = getChartData();
+  const allCategories = Array.from(new Set(transactions.map(t => t.category)));
+  const chartData = Object.entries(rawChartData).map(([date, data]) => ({
     date,
-    amount,
+    ...data.categories,
+    total: data.total
   }));
 
   return (
@@ -242,18 +248,46 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
                   borderRadius: '8px',
                   boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)'
                 }}
-                formatter={(value: number) => [
-                  value.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD'
-                  })
-                ]}
+                content={({ active, payload, label }) => active && (
+                <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
+                  <p className="font-semibold mb-2">{label}</p>
+                  {payload?.map((entry, index) => (
+                    <div key={`item-${index}`} className="flex justify-between gap-4">
+                      <span style={{ color: entry.color }}>
+                        {typeof entry.name === 'string' ? entry.name.replace(/_/g, ' ') : 'Unknown'}:
+                      </span>
+                      <span>
+                        {(entry.value || 0).toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD'
+                        })}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="mt-2 pt-2 border-t border-gray-100 font-semibold">
+                    Total: {payload?.reduce((sum, entry) => sum + (Number(entry.value) || 0), 0)
+                      .toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                  </div>
+                </div>
+              )}
               />
-              <Bar 
-                dataKey="amount" 
-                fill="#3B82F6" 
-                radius={[4, 4, 0, 0]}
-              />
+              {
+                allCategories.map((category, index) => (
+                  <Bar
+                    key={category}
+                    dataKey={category}
+                    stackId="a"
+                    fill={[
+                      '#3B82F6',
+                      '#10B981',
+                      '#F59E0B',
+                      '#EF4444',
+                      '#8B5CF6'
+                    ][index % 5]}
+                    radius={index === allCategories.length - 1 ? [4, 4, 0, 0] : undefined}
+                  />
+                ))
+              }
             </BarChart>
           </ResponsiveContainer>
         </div>
