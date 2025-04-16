@@ -8,7 +8,6 @@ export default function Header({ className }: { className?: string }) {
         width={300}
         height={300}
       />
-      <h1 className="text-4xl font-bold">tomin</h1>
       <p className="text-lg text-gray-500">AI-powered financial assistant</p>
     </div>
   );

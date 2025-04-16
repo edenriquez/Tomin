@@ -21,6 +21,14 @@ const calculateDateRanges = (transactions: Array<{ date: string }>) => {
 
   // Get all months between oldest and newest date
   const ranges = [];
+
+  // Add "All" option first
+  ranges.push({
+    label: 'All',
+    days: Math.ceil((newestDate.getTime() - oldestDate.getTime()) / (1000 * 60 * 60 * 24)),
+    startDate: null
+  });
+
   const currentDate = new Date(oldestDate);
   currentDate.setDate(1); // Start from beginning of month
 
@@ -43,7 +51,7 @@ const calculateDateRanges = (transactions: Array<{ date: string }>) => {
   }
 
   // Ensure at least one range is available
-  if (ranges.length === 0) {
+  if (ranges.length === 1) { // Changed from 0 to 1 since we always have "All"
     const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
     ranges.push({
       label: currentMonth,
@@ -95,57 +103,43 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
       return transactionDate >= startOfMonth && transactionDate <= endOfMonth;
     });
   };
-  // Prepare chart data based on selection
-  // TODO: move this feature to a different kind of
-  // action button, works fine but main goal of thi chart would be 
-  // just show spends per category
-  // const getChartData = () => {
-  //   const filteredTransactions = filterTransactions(
-  //     activeTab === 'concepts' && selectedConcept
-  //       ? transactions.filter(t => t.description === selectedConcept)
-  //       : transactions.filter(t => t.category === selectedCategory)
-  //   );
-
-    
-  //   return filteredTransactions.reduce((acc, transaction) => {
-  //     const date = new Date(transaction.date).toLocaleDateString('en-US', {
-  //       month: 'short',
-  //       day: 'numeric',
-  //     });
-  //     acc[date] = (acc[date] || 0) + Math.abs(transaction.amount);
-  //     return acc;
-  //   }, {} as Record<string, number>);
-  // };
 
   const getChartData = () => {
-    const filteredTransactions = filterTransactions(transactions);
-
-    
+    const filteredTransactions = filterTransactions(
+      activeTab === 'concepts' && selectedConcept
+        ? transactions
+        : transactions
+    );
+  
     return filteredTransactions.reduce((acc, transaction) => {
       const date = new Date(transaction.date).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
       });
-      const category = transaction.category;
-      if (!acc[date]) acc[date] = { total: 0, categories: {} };
+      const key = activeTab === 'concepts' ? transaction.description : transaction.category;
+      
+      if (!acc[date]) acc[date] = { total: 0, breakdown: {} };
       acc[date].total += Math.abs(transaction.amount);
-      acc[date].categories[category] = (acc[date].categories[category] || 0) + Math.abs(transaction.amount);
+      acc[date].breakdown[key] = (acc[date].breakdown[key] || 0) + Math.abs(transaction.amount);
       return acc;
-    }, {} as Record<string, { total: number; categories: Record<string, number> }>);
+    }, {} as Record<string, { total: number; breakdown: Record<string, number> }>);
   };
-
+  
   const rawChartData = getChartData();
-  const allCategories = Array.from(new Set(transactions.map(t => t.category)));
+  const chartKeys = activeTab === 'concepts'
+    ? Array.from(new Set(transactions.map(t => t.description)))
+    : Array.from(new Set(transactions.map(t => t.category)));
+  
   const chartData = Object.entries(rawChartData).map(([date, data]) => ({
     date,
-    ...data.categories,
+    ...data.breakdown,
     total: data.total
   }));
 
   return (
     <div className="bg-white text-gray-800 h-screen flex rounded-lg">
       {/* Left Sidebar (30%) */}
-      <div className="w-1/3 border-r p-6 flex flex-col bg-gray-50">
+      <div className="w-1/3 p-6 flex flex-col bg-gray-50">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Tomin</h1>
           <h2 className="text-lg text-gray-600 mt-1">AI-Powered Assistant</h2>
@@ -173,13 +167,16 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
             <div
               key={key}
               className={`group flex items-center justify-between p-4 mb-3 rounded-xl cursor-pointer transition-all
-                ${(activeTab === 'concepts' && selectedConcept === key) || 
-                  (activeTab === 'categories' && selectedCategory === key)
+                ${(activeTab === 'concepts' && selectedConcept === key)
                   ? 'bg-white border-2 border-blue-200 shadow-md'
-                  : 'hover:bg-white hover:shadow-sm border border-transparent'}`}
+                  : activeTab === 'concepts' && selectedConcept
+                    ? 'bg-gray-100 opacity-70 hover:opacity-100 hover:bg-gray-50'
+                    : 'hover:bg-white hover:shadow-sm border border-transparent'}
+                    `}
               onClick={() => activeTab === 'concepts' 
-                ? setSelectedConcept(key) 
-                : setSelectedCategory(key)}
+                ? setSelectedConcept(current => current === key ? null : key)
+                : setSelectedCategory(current => current === key ? null : key)
+              }
             >
               <span className={`text-sm ${
                 (activeTab === 'concepts' && selectedConcept === key) ||
@@ -208,10 +205,10 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
             <button
               key={range.label}
               className={`px-5 py-2 rounded-xl text-sm font-semibold transition-colors
-                ${selectedRange?.getTime() === range.startDate.getTime()
+                ${selectedRange?.getTime() === range.startDate?.getTime()
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-              onClick={() => setSelectedRange(range.startDate)}
+              onClick={() => setSelectedRange(range.startDate || undefined)}
             >
               {range.label}
             </button>
@@ -238,7 +235,9 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
               />
               <YAxis
                 stroke="#6B7280"
-                tickFormatter={(value) => `$${value.toLocaleString()}`}
+                tickFormatter={(value) => activeTab === 'concepts' 
+                  ? `$${value.toLocaleString('es-MX')}`
+                  : `$${value.toLocaleString()}`}
                 tick={{ fill: '#6B7280', fontSize: 12 }}
               />
               <Tooltip
@@ -257,34 +256,38 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
                         {typeof entry.name === 'string' ? entry.name.replace(/_/g, ' ') : 'Unknown'}:
                       </span>
                       <span>
-                        {(entry.value || 0).toLocaleString('en-US', {
+                        {(entry.value || 0).toLocaleString(activeTab === 'concepts' ? 'es' : 'en-US', {
                           style: 'currency',
-                          currency: 'USD'
+                          currency: activeTab === 'concepts' ? 'MXN' : 'USD'
                         })}
                       </span>
                     </div>
                   ))}
                   <div className="mt-2 pt-2 border-t border-gray-100 font-semibold">
                     Total: {payload?.reduce((sum, entry) => sum + (Number(entry.value) || 0), 0)
-                      .toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+                      .toLocaleString(activeTab === 'concepts' ? 'es' : 'en-US', { 
+                        style: 'currency', 
+                        currency: activeTab === 'concepts' ? 'MXN' : 'USD'
+                      })}
                   </div>
                 </div>
               )}
               />
               {
-                allCategories.map((category, index) => (
+                chartKeys.map((key, index) => (
                   <Bar
-                    key={category}
-                    dataKey={category}
+                    key={key}
+                    dataKey={key}
                     stackId="a"
-                    fill={[
-                      '#3B82F6',
-                      '#10B981',
-                      '#F59E0B',
-                      '#EF4444',
-                      '#8B5CF6'
-                    ][index % 5]}
-                    radius={index === allCategories.length - 1 ? [4, 4, 0, 0] : undefined}
+                    fill={
+                      activeTab === 'concepts' && selectedConcept || 
+                      activeTab === 'categories' && selectedCategory
+                        ? key === selectedCategory || key === selectedConcept
+                          ? ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6'][index % 5]
+                          : '#E5E7EB'
+                        : ['#3B82F6','#10B981','#F59E0B','#EF4444','#8B5CF6'][index % 5]
+                    }
+                    radius={index === chartKeys.length - 1 ? [4, 4, 0, 0] : undefined}
                   />
                 ))
               }
