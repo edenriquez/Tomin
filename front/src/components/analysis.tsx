@@ -139,10 +139,11 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
   return (
     <div className="bg-white text-gray-800 h-screen flex rounded-lg">
       {/* Left Sidebar (30%) */}
-      <div className="w-1/3 p-6 flex flex-col bg-gray-50">
-        <div className="mb-8">
+      <div className="w-1/3 p-6 flex flex-col bg-gray-50 rounded-lg">
+        <div className="mb-8 relative">
           <h1 className="text-3xl font-bold text-gray-900">Tomin</h1>
           <h2 className="text-lg text-gray-600 mt-1">AI-Powered Assistant</h2>
+          
         </div>
 
         {/* Tabs */}
@@ -162,7 +163,8 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
         </div>
 
         {/* Tab Content */}
-        <div className="flex-1 overflow-y-auto pr-2">
+        <div className="flex-1 overflow-y-auto pr-2 relative">
+          {/* Auth prompt removed from here */}
           {(activeTab === 'concepts' ? Object.entries(conceptsData) : Object.entries(categoriesData)).map(([key, amount]) => (
             <div
               key={key}
@@ -196,9 +198,8 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
           ))}
         </div>
       </div>
-
-      {/* Right Content (70%) */}
-      <div className="w-2/3 p-8 flex flex-col">
+           {/* Right Content (70%) */}
+           <div className="w-2/3 p-8 flex flex-col">
         {/* Date Range Filter */}
         <div className="flex justify-center gap-2 mb-8">
           {dateRanges.map((range) => (
@@ -213,6 +214,13 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
               {range.label}
             </button>
           ))}
+            <button
+              key={"+"}
+              className={`px-5 py-2 rounded-xl transition-all bg-gray-100 text-gray-600 hover:bg-blue-600 hover:text-white hover:scale-120`}
+              // onClick={} // should open upload file
+            >
+              {"+"}
+            </button>
         </div>
 
         {/* Main Chart */}
@@ -293,8 +301,11 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
               }
             </BarChart>
           </ResponsiveContainer>
+
         </div>
       </div>
     </div>
   );
 }
+
+ 
