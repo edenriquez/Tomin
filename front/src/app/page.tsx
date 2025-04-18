@@ -5,10 +5,12 @@ import AnalysisResult from '@/components/analysis'
 import UploadFile from '@/components/upload';
 import { useState } from 'react';
 import { ApiProcessResponse } from '@/lib/api';
+import TryForFree from '@/components/tryout';
 
 export default function Home() {
   const [analysisResult, setAnalysisResult] = useState<ApiProcessResponse>();
   const [isUploading, setIsUploading] = useState(false);
+  const [tryFree, setTryFree] = useState(false);
 
 
 
@@ -29,10 +31,26 @@ export default function Home() {
       />
       <div className="w-full space-y-8 relative z-10">
         <Header className="text-center space-y-2" />
-        <div className="transition-all duration-200 ease-in-out">
-          {analysisResult ? (
+        <TryForFree setTryFree={setTryFree} tryFree={tryFree} />
+        <div className="grid grid-cols-10 gap-4 transition-all duration-500 ease-in-out">
+          {/* shows initially */}
+
+          {!analysisResult && !tryFree && (
+            /* eslint-disable @next/next/no-img-element */
+            <div className={`col-span-8 col-start-2  ease-in-out ${tryFree ? 'opacity-0' : 'opacity-100'}`}>
+              <img 
+                className="mx-auto"
+                src="/example.png"
+                alt="example image"
+              />
+            </div>
+          )}
+          {/* Only shows when analysis result comes from backend */}
+          {analysisResult && (
             <AnalysisResult data={analysisResult} />
-          ) : (
+          )}
+          {/* only shows when user has clicked try for free  */}
+          {!analysisResult && tryFree && (
             <UploadFile 
               setAnalysisResult={setAnalysisResult}
               setIsUploading={setIsUploading}

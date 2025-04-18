@@ -42,13 +42,13 @@ export default function UploadFile({
         },
       });
     
-      const dahsedBorder = 'border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors'
+      const dahsedBorder = 'col-span-6 col-start-3  border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors'
       const dragStyle = isDragActive ? 'border-emerald-500 bg-emerald-50 ring-4 ring-emerald-100' : 'border-gray-300 hover:border-gray-400'
     
     return (
         <div
               {...getRootProps()}
-              className={`${dahsedBorder} ${dragStyle} ${isUploading ? 'cursor-wait' : ''} w-full max-w-md mx-auto`}
+              className={`${dahsedBorder} ${dragStyle} ${isUploading ? 'cursor-wait' : ''} w-full  mx-auto`}
             >
               <input {...getInputProps()} type="file" accept="application/pdf" />
               {isUploading ? (

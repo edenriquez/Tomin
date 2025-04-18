@@ -137,7 +137,7 @@ export default function AnalysisResult({ data }: { data: ApiProcessResponse }) {
   }));
 
   return (
-    <div className="bg-white text-gray-800 h-screen flex rounded-lg">
+    <div className=" col-span-8 col-start-2  bg-white text-gray-800 h-screen flex rounded-lg">
       {/* Left Sidebar (30%) */}
       <div className="w-1/3 p-6 flex flex-col bg-gray-50 rounded-lg">
         <div className="mb-8 relative">
