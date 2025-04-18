@@ -8,7 +8,7 @@ export default function Header({ className }: { className?: string }) {
         width={300}
         height={300}
       />
-      <p className="text-lg text-gray-500">AI-powered financial assistant</p>
+      <p className="text-lg text-white">AI-powered financial assistant</p>
     </div>
   );
 }

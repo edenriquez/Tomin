@@ -1,9 +1,10 @@
-import { UploadCloud as UploadCloudIcon } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
+
 export default function UploadIcon({isDragActive}: {isDragActive: boolean}) {
 
     return (
             <div className="space-y-4">
-                <UploadCloudIcon className="mx-auto h-12 w-12 text-gray-400" />
+                <PlusCircle className="mx-auto h-12 w-12 text-gray-400" />
                 <div className="space-y-1">
                     <p className="font-medium">
                     {isDragActive ? "Suelta el archivo aqui" : "Arrastra y suelta tu estado de cuenta"}
