@@ -6,6 +6,7 @@ import UploadFile from '@/components/upload';
 import { useState } from 'react';
 import { ApiProcessResponse } from '@/lib/api';
 import TryForFree from '@/components/tryout';
+import SupportedBrands from '@/components/supported';
 
 export default function Home() {
   const [analysisResult, setAnalysisResult] = useState<ApiProcessResponse>();
@@ -32,28 +33,7 @@ export default function Home() {
       <div className="w-full space-y-8 relative z-10">
         <Header className="text-center space-y-2" />
         <TryForFree setTryFree={setTryFree} tryFree={tryFree} />
-        <div className="relative w-full overflow-hidden mb-10 -mt-8">
-          <div className="flex justify-center gap-4">
-             {/* eslint-disable @next/next/no-img-element */}
-             <img
-                src={`/carousel-${1}.png`}
-                alt={`Carousel image ${1}`}
-                className="h-[100px] w-64 object-cover rounded-lg shadow-lg grayscale hover:grayscale-0 transition-all duration-300"
-              />
-             {/* eslint-disable @next/next/no-img-element */}
-             <img
-                src={`/carousel-${2}.png`}
-                alt={`Carousel image ${2}`}
-                className="h-[100px] object-cover rounded-lg shadow-lg grayscale hover:grayscale-0 transition-all duration-300"
-              />
-             {/* eslint-disable @next/next/no-img-element */}
-             <img
-                src={`/carousel-${3}.png`}
-                alt={`Carousel image ${3}`}
-                className="h-[100px] w-64 object-cover rounded-lg shadow-lg grayscale hover:grayscale-0 transition-all duration-300"
-              />
-          </div>
-        </div>
+        <SupportedBrands/>
         
         <div className="grid grid-cols-10 gap-4 transition-all duration-500 ease-in-out">
           {/* shows initially */}

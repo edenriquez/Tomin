@@ -42,7 +42,7 @@ export default function UploadFile({
         },
       });
     
-      const dahsedBorder = 'col-span-6 col-start-3  border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors'
+      const dahsedBorder = 'pt-20 h-[300] col-span-6 col-start-3  border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-colors'
       const dragStyle = isDragActive ? 'border-emerald-500 bg-emerald-50 ring-4 ring-emerald-100' : 'border-gray-300 hover:border-gray-400'
     
     return (
@@ -52,8 +52,8 @@ export default function UploadFile({
             >
               <input {...getInputProps()} type="file" accept="application/pdf" />
               {isUploading ? (
-                <div className="space-y-2 w-full">
-                  <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                <div className=" space-y-2 w-full h-full flex flex-col ">
+                  <div className="h-3 bg-gray-100 rounded-full overflow-hidden ">
                     <div 
                       className="h-3 bg-emerald-600 rounded-full transition-all duration-300"
                       style={{ width: `${uploadProgress}%` }}
@@ -64,11 +64,6 @@ export default function UploadFile({
               ) : (
                 <div className="space-y-4">
                   <UploadIcon isDragActive={isDragActive} />
-                  <div className="space-y-1">
-                    <p className="font-medium text-gray-900">
-                      {isDragActive ? 'Suelta el archivo aquí' : 'Arrastra tu PDF aquí'}
-                    </p>
-                  </div>
                 </div>
               )}
             </div>
