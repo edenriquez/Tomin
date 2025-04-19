@@ -10,20 +10,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-amplify/adapter-nextjs": "^1.5.8",
-    "aws-amplify": "^6.14.1",
     "axios": "^1.8.4",
-    "i18next": "^24.2.3",
-    "install": "^0.13.0",
     "lucide-react": "^0.487.0",
     "next": "15.2.4",
-    "next-i18next": "^15.4.2",
     "npm": "^11.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.8",
     "react-hot-toast": "^2.5.2",
-    "react-i18next": "^15.4.1",
     "recharts": "^2.15.2"
   },
   "devDependencies": {
