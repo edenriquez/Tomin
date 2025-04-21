@@ -32,8 +32,8 @@ export type ApiHealthResponse = {
   }
 };
 
-// const BASE_URL = `https://i7hl4me64iadbkql4tjcpt5m6q0vgwos.lambda-url.us-east-1.on.aws`
-const BASE_URL = `http://localhost:8000`
+const BASE_URL = `https://i7hl4me64iadbkql4tjcpt5m6q0vgwos.lambda-url.us-east-1.on.aws`
+// const BASE_URL = `http://localhost:8000`
 
 export const ping = async (): Promise<ApiHealthResponse> => {
   try{
