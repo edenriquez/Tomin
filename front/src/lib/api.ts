@@ -9,6 +9,21 @@ export type ApiProcessResponse = {
   }
 };
 
+export type ApiAuhResponse = {
+  body: {
+    success: boolean;
+    message: string;
+    access_token: string;
+  }
+};
+
+export type ApiResponseEnvelope = {
+  body: {
+    success: boolean;
+    message: string;
+  }
+};
+
 export type ApiHealthResponse = {
   body: {
     status: string;
@@ -46,7 +61,7 @@ export const uploadPdf = async (file: File, onProgress?: (progress: number) => v
 
   try {
     const response = await axios.post<ApiProcessResponse>(
-      `${BASE_URL}/process`,
+      `${BASE_URL}/demo-process`,
       formData,
       {
         headers: {
@@ -66,3 +81,35 @@ export const uploadPdf = async (file: File, onProgress?: (progress: number) => v
     throw new Error('Failed to upload PDF');
   }
 };
+
+export const authUser = async(token: string): Promise<ApiAuhResponse> => {
+  try {
+    const response = await axios.post<ApiAuhResponse>(
+      `${BASE_URL}/oauth-token`,
+      { token },
+      { timeout: 60000 },
+    );
+  
+    return response.data
+  } catch(error) {
+    console.error('Signin Failed:', error);
+    throw new Error('Failed to signin user');
+
+  }
+}
+
+export const subscribe = async(email: string): Promise<ApiResponseEnvelope> => {
+  try {
+    const response = await axios.post<ApiResponseEnvelope>(
+      `${BASE_URL}/subscribe`,
+      { email },
+      { timeout: 60000 },
+    );
+  
+    return response.data
+  } catch(error) {
+    console.error('Subscription Failed:', error);
+    throw new Error('Failed to subscribe user');
+
+  }
+}
