@@ -17,8 +17,8 @@ COPY back/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 4. Copy application code with proper structure
-COPY back/ /var/task/back/
-COPY main.py /var/task/
+COPY back/ /var/task/
+COPY back/main.py /var/task/
 
 # 5. Lambda entrypoint
 CMD ["main.handler"]

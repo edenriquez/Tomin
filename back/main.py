@@ -2,8 +2,8 @@ from mangum import Mangum
 
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from back.services import health  # Updated import
-from back.services import demo    # Updated import
+from services import health  # Updated import
+from services import demo  # Updated import
 from models import models
 from database import connection
 from fastapi import HTTPException
