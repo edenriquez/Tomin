@@ -2,7 +2,7 @@ fastapi==0.115.12
 mangum==0.17.0
 openai==1.75.0
 python-multipart==0.0.9
-pdfplumber==0.10.3
+pdfplumber==0.11.6
 python-dotenv==1.1.0
 python_magic==0.4.27
 Requests==2.32.3

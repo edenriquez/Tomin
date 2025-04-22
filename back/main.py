@@ -1,4 +1,7 @@
 from mangum import Mangum
+import requests
+import datetime
+import os
 
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,15 +10,16 @@ from services import demo  # Updated import
 from models import models
 from database import connection
 from fastapi import HTTPException
-import requests
-import datetime
 from fastapi import Request
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
-limiter = Limiter(key_func=get_remote_address, default_limits=["2/minute"])
+RATE_LIMIT_MINUTES = (
+    "100/minute" if os.environ.get("ENVIRONMENT") == "development" else "2/minute"
+)
+limiter = Limiter(key_func=get_remote_address, default_limits=[RATE_LIMIT_MINUTES])
 
 app = FastAPI()
 app.state.limiter = limiter
@@ -53,7 +57,9 @@ async def health_check():
 @app.post("/demo-process")
 async def process_pdf(file: UploadFile = File(..., format=[".pdf"], alias="file")):
     content = await file.read()
-    analysis = demo.process_pdf(file)
+    analysis = await demo.process_pdf(content)
+
+    await file.seek(0)
 
     return {
         "statusCode": 200,
