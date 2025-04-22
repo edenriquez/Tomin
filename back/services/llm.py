@@ -72,17 +72,17 @@ Return ONLY valid JSON. No commentary or formatting.
 
 async def analyze_expenses(text: str) -> Dict[str, Any]:
     try:
-        # response = client.chat.completions.create(
-        #     model="llama-3.3-70b-versatile",
-        #     messages=[
-        #         {"role": "user", "content": EXPENSE_PROMPT_TEMPLATE.format(text=text)}
-        #     ],
-        #     response_format={"type": "json_object"},
-        # )
-        # print("--->", response)
-        # result = json.loads(response.choices[0].message.content)
-        with open("./example/200-back.json", "r") as file:
-            result = json.load(file)
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "user", "content": EXPENSE_PROMPT_TEMPLATE.format(text=text)}
+            ],
+            response_format={"type": "json_object"},
+        )
+        print("--->", response)
+        result = json.loads(response.choices[0].message.content)
+        # with open("./example/200-back.json", "r") as file:
+        #     result = json.load(file)
         return result
     except Exception as e:
         print("--->err", e)
