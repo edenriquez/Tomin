@@ -1,4 +1,4 @@
-![Tomin Banner](assets/screen1.png)
+![Tomin Banner](assets/screen3.png)
 
 ## Tomin
 
