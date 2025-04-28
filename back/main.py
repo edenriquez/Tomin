@@ -17,7 +17,7 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.middleware import SlowAPIMiddleware
 
 RATE_LIMIT_MINUTES = (
-    "100/minute" if os.environ.get("ENVIRONMENT") == "development" else "2/minute"
+    "100/minute" if os.environ.get("ENVIRONMENT") == "development" else "5/minute"
 )
 limiter = Limiter(key_func=get_remote_address, default_limits=[RATE_LIMIT_MINUTES])
 
