@@ -1,4 +1,3 @@
-from mangum import Mangum
 import requests
 import datetime
 import os
@@ -22,6 +21,7 @@ RATE_LIMIT_MINUTES = (
 limiter = Limiter(key_func=get_remote_address, default_limits=[RATE_LIMIT_MINUTES])
 
 app = FastAPI()
+
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
@@ -178,4 +178,5 @@ async def handle_oauth_token(token_data: dict):
     }
 
 
-handler = Mangum(app)
+if __name__ == "__main__":
+    app.run()
